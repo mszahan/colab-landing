@@ -41,3 +41,26 @@ h2 {
     font-weight: 600;
     font-size: 2.5rem;
 }
+
+@media (min-width:750px) {
+    .content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    #colab {
+        order: 1;
+    }
+
+    .shadow {
+        order: 2;
+    }
+
+    #typewriter {
+        order: 3;
+    }
+
+
+}
+
