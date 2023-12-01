@@ -118,7 +118,6 @@ h2#typewriter {
     display: flex;
     align-self: center;
     justify-self: center;
-
     font-size: 30px;
     font-weight: bold;
 }
@@ -149,8 +148,12 @@ p {
     border: 0;
     width: 100px;
     height: 30px;
-
     font-size: 20px;
+}
+
+.btn:hover {
+    cursor: pointer;
+    background-color: white;
 }
 
 #start {

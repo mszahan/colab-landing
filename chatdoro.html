@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    #timer {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    button {
+      font-size: 1em;
+      margin: 5px;
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="timer">25:00</div>
+  <button onclick="startTimer()">Start</button>
+  <button onclick="pauseTimer()">Pause</button>
+  <button onclick="resetTimer()">Reset</button>
+  <button onclick="skipBreak()">Skip Break</button>
+
+  <script>
+    let timer;
+    let time = 1500; // Initial time in seconds (25 minutes)
+    let breakTime = 300; // Break time in seconds (5 minutes)
+    let cycleCount = 0;
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(time / 60);
+      const seconds = time % 60;
+      document.getElementById('timer').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+
+    function startTimer() {
+      timer = setInterval(() => {
+        time--;
+
+        if (time < 0) {
+          clearInterval(timer);
+          if (cycleCount < 3) {
+            playSound('startBreakSound');
+            time = breakTime;
+            cycleCount++;
+          } else {
+            playSound('startLongBreakSound');
+            time = 900; // 15 minutes for long break
+            cycleCount = 0;
+          }
+        }
+
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timer);
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      time = 1500;
+      cycleCount = 0;
+      updateTimerDisplay();
+    }
+
+    function skipBreak() {
+      clearInterval(timer);
+      playSound('endBreakSound');
+      time = 1500; // Reset to 25 minutes
+      cycleCount = 0;
+      updateTimerDisplay();
+    }
+
+    function playSound(soundId) {
+      const audio = new Audio(`path/to/${soundId}.mp3`);
+      audio.play();
+    }
+  </script>
+</body>
+</html>
