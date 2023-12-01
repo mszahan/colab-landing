@@ -8,25 +8,17 @@ var ws = document.getElementById('w_seconds');
 var bm = document.getElementById('b_minutes');
 var bs = document.getElementById('b_seconds');
 
-var breakStartSound = new Audio('start.mp3');
-var breakEndSound = new Audio('end.mp3');
+var breakStartSound = new Audio('end.mp3');
+var breakEndSound = new Audio('start.mp3');
 
 // store a reference to a timer variable
 var startTimer;
-var pageVisible = true; // flag to track whether the page is currently visible
-
-// Check page visibility
-document.addEventListener("visibilitychange", function () {
-    pageVisible = !document.hidden;
-    if (!pageVisible) {
-        stopInterval(); // Pause the timer when the page is not visible
-    }
-});
 
 start.addEventListener('click', function () {
     if (startTimer === undefined) {
+        breakStartSound.play();
         startTimer = setInterval(timer, 1000);
-    }
+    } 
 });
 
 reset.addEventListener('click', function () {
@@ -48,10 +40,6 @@ stop.addEventListener('click', function () {
 
 // Start Timer Function
 function timer() {
-    if (!pageVisible) {
-        return; // Do nothing if the page is not visible
-    }
-
     // Work Timer Countdown
     if (ws.innerText != 0) {
         ws.innerText--;
